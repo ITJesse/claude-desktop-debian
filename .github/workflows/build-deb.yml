@@ -34,7 +34,7 @@ jobs:
     - name: 获取包版本信息
       id: package-info
       run: |
-        DEB_FILE=$(ls claude-desktop_*.deb)
+        DEB_FILE=$(ls build/electron-app/*.deb)
         VERSION=$(echo $DEB_FILE | grep -oP 'claude-desktop_\K[0-9\.]+(?=_amd64.deb)')
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "filename=$DEB_FILE" >> $GITHUB_OUTPUT

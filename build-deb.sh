@@ -71,16 +71,16 @@ if [ ! -z "$DEPS_TO_INSTALL" ]; then
 fi
 
 # Install electron globally via npm if not present
-if ! check_command "electron"; then
-    echo "Installing electron via npm..."
-    npm install -g electron
-    if ! check_command "electron"; then
-        echo "Failed to install electron. Please install it manually:"
-        echo "sudo npm install -g electron"
-        exit 1
-    fi
-    echo "Electron installed successfully"
-fi
+# if ! check_command "electron"; then
+#     echo "Installing electron via npm..."
+#     npm install -g electron
+#     if ! check_command "electron"; then
+#         echo "Failed to install electron. Please install it manually:"
+#         echo "sudo npm install -g electron"
+#         exit 1
+#     fi
+#     echo "Electron installed successfully"
+# fi
 
 # Extract version from the installer filename
 VERSION=$(basename "$CLAUDE_DOWNLOAD_URL" | grep -oP 'Claude-Setup-x64\.exe' | sed 's/Claude-Setup-x64\.exe/0.8.0/')
