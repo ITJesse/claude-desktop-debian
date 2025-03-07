@@ -1,0 +1,51 @@
+name: 构建 Claude Desktop Debian 包
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      claude_url:
+        description: 'Claude Desktop 下载 URL'
+        required: false
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v3
+      
+    - name: 设置 Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22
+        
+    - name: 运行构建脚本
+      run: |
+        chmod +x build-deb.sh
+        sudo ./build-deb.sh
+        
+    - name: 上传 Debian 包
+      uses: actions/upload-artifact@v3
+      with:
+        name: claude-desktop-deb
+        path: claude-desktop_*.deb
+        
+    - name: 获取包版本信息
+      id: package-info
+      run: |
+        DEB_FILE=$(ls claude-desktop_*.deb)
+        VERSION=$(echo $DEB_FILE | grep -oP 'claude-desktop_\K[0-9\.]+(?=_amd64.deb)')
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "filename=$DEB_FILE" >> $GITHUB_OUTPUT
+        
+    - name: 显示构建信息
+      run: |
+        echo "构建完成！"
+        echo "包文件名: ${{ steps.package-info.outputs.filename }}"
+        echo "版本: ${{ steps.package-info.outputs.version }}" 
