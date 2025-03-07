@@ -2,15 +2,10 @@ name: 构建 Claude Desktop Debian 包
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
   workflow_dispatch:
-    inputs:
-      claude_url:
-        description: 'Claude Desktop 下载 URL'
-        required: false
-        type: string
 
 jobs:
   build:
