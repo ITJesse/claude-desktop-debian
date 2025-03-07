@@ -26,10 +26,10 @@ jobs:
         sudo ./build-deb.sh
         
     - name: 上传 Debian 包
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: claude-desktop-deb
-        path: claude-desktop_*.deb
+        path: build/electron-app/*.deb
         
     - name: 获取包版本信息
       id: package-info
